@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinkao Restaurant Service Website</title>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/myScript.js}"></script>
+</head>
+<style>
+    body
+    {
+        /*            background-image: url('https://wallpaperaccess.com/full/2029165.jpg');*/
+        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('https://images.wallpaperscraft.com/image/vegetables_basket_green_106346_1920x1080.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
+<body>
+    <div th:insert="fragments/header :: header"></div>
+
+    <div class="container">
+        <h1 class="display-6">Vegetables</h1>
+        <table style="width: 100%">
+            <tr th:each="vegetable : ${vegetables}">
+                <div class="card custom-card text-center mr-2 mt-2 ml-2 mb-2"
+                     style="width: 18rem; display: inline-block; margin-right: 30px;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${'Vegetable : ' + vegetable.name}">Id</h5>
+                        <img alt="" class="rounded-circle img-responsive mt-2"
+                             height="128" th:src="${'../../images/'+ vegetable.name +'.jpg'}" width="128">
+                        <p class="card-text" style="text-align:left;" th:text="${'Weight    : ' + vegetable.weight + ' KG'}">Weight</p>
+                        <p class="card-text" style="text-align:left;" th:text="${'Avaliable : ' + vegetable.amount + ' KG'}">Amount</p>
+                        <p class="card-text" style="text-align:left;" th:text="${'Price/KG  : ' + vegetable.price + ' Baht'}" th:value="${vegetable.price}">Price</p>
+                        <form>
+                            <input type="button" th:onclick="decrementValue([[${vegetable.id}]])" value="-" style="border-style: hidden;"/>
+                            <input disabled type="text" style="text-align: center;border-style: hidden;background:none;" th:id="${vegetable.id}" value="0"/>
+                            <input type="button" th:onclick="incrementValue([[${vegetable.id}]])" value="+" style="border-style: hidden;"/>
+                                <a class="btn btn-primary" th:href="@{/vegetable/edit/{id}(id=${vegetable.id})}">Edit</a>
+                        </form>
+                    </div>
+                </div>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
