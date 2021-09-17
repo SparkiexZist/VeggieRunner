@@ -16,7 +16,8 @@ public class UserService
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<User> getAll() {
+    public List<User> getAll()
+    {
         String url = "http://localhost:8090/user";
         ResponseEntity<User[]> response = restTemplate.getForEntity(url, User[].class);
         User[] users = response.getBody();
@@ -28,4 +29,5 @@ public class UserService
 
         restTemplate.postForObject(url, user, User.class);
     }
+
 }

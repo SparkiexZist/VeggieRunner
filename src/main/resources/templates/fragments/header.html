@@ -33,18 +33,49 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/vegetable}">Order</a>
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="nav-link" th:href="@{/vegetable}">Vegetable</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Drive-Thru</a>
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="nav-link" th:href="@{/order}">Order</a>
+                </li>
+                </li>
+                <li sec:authorize="hasRole('USER')" class="nav-item">
+                    <a class="nav-link" th:href="@{/vegetable}">Vegetable</a>
+                </li>
+                <li sec:authorize="hasRole('USER')" class="nav-item">
+                    <a class="nav-link" th:href="@{/order}">Order</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/vegetable}">Edit Vegetable</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/order}">Edit Order</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Login</a>
-                </li>
+                <div sec:authorize="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/vegetable/add}">Add vegetable</a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/order/add}">Add order</a>
+                    </li>
+                </div>
+                <div sec:authorize="hasAnyRole('ADMIN','USER')">
+<!--                    hasAnyAuthority('ADMIN')-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                    </li>
+                </div>
             </ul>
 
         </div>

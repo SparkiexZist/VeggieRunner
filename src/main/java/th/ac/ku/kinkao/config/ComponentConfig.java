@@ -15,9 +15,5 @@ public class ComponentConfig {
         return builder.build();
     }
     // เป็นดีไซน์แพทเทิลแบบหนึ่ง
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 }
