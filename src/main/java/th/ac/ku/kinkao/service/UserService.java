@@ -2,6 +2,7 @@ package th.ac.ku.kinkao.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import th.ac.ku.kinkao.model.User;
@@ -26,7 +27,6 @@ public class UserService
 
     public void addUser(User user) {
         String url = "http://localhost:8090/user";
-
         restTemplate.postForObject(url, user, User.class);
     }
 

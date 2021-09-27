@@ -30,7 +30,8 @@ public class VegetableService {
         restTemplate.postForObject(url, vegetable, Vegetable.class);
     }
 
-    public Vegetable getOneById(UUID id) {
+    public Vegetable getOneById(UUID id)
+    {
         String url = "http://localhost:8090/vegetable/" + id;
         ResponseEntity<Vegetable> response =
                 restTemplate.getForEntity(url, Vegetable.class);

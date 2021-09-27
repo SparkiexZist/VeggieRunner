@@ -6,13 +6,38 @@
     <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/myScript.js}"></script>
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td)
+                {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().localeCompare(filter) === 0)
+                    {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 
 </head>
 <style>
     body
     {
         /*            background-image: url('https://wallpaperaccess.com/full/2029165.jpg');*/
-        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('https://images.wallpaperscraft.com/image/vegetables_basket_green_106346_1920x1080.jpg');
+        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('https://wallpaperaccess.com/full/1598445.jpg');
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -25,8 +50,8 @@
 <div class="container" style="background-color:white; margin-top:30px; border-radius:25px;">
     <h1 class="display-6">Order tracking
     </h1>
-    <input id="searchbar" class="search" type="text" name="search" placeholder="Search order">
-    <table class="table table-striped">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+    <table class="table table-striped" id="myTable">
         <thead>
         <tr>
             <th>Date</th>
@@ -58,7 +83,20 @@
                         </td>
                     </tr>
 
-                    <tr sec:authorize="hasRole('USER')" th:each="order : ${orders}" th:if="${order.mobile eq '0612476048'}">
+                    <tr style="display:none;" sec:authorize="isAnonymous()" th:each="order : ${orders}">
+                        <td th:text="${order.date}"></td>
+                        <td th:text="${order.name}"></td>
+                        <td th:text="${order.mobile}"></td>
+                        <td th:text="${order.vegetable}"></td>
+                        <td th:text="${order.amount}"></td>
+                        <td th:text="${order.weight}"></td>
+                        <td th:text="${order.price}"></td>
+                        <td th:text="${order.status}"></td>
+                        <td sec:authorize="hasRole('ADMIN')" style="text-align: center">
+                            <a class="btn btn-primary" th:href="@{/order/edit/{id}(id=${order.order_Id})}">Edit</a>
+                        </td>
+                    </tr>
+                    <tr style="display:none;" sec:authorize="hasRole('USER')" th:each="order : ${orders}" th:if="${order.mobile eq '0612476048'}">
                         <td th:text="${order.date}"></td>
                         <td th:text="${order.name}"></td>
                         <td th:text="${order.mobile}"></td>
